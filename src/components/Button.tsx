@@ -1,4 +1,5 @@
 import { cva } from 'class-variance-authority';
+import { twMerge } from 'tailwind-merge';
 
 interface buttonProps {
   children: React.ReactNode;
@@ -25,7 +26,7 @@ const buttonVariants = cva(
 
 function Button({ children, variant, className }: buttonProps) {
   return (
-    <button className={buttonVariants({ variant, className })}>
+    <button className={twMerge(buttonVariants({ variant }), className)}>
       {children}
     </button>
   );
