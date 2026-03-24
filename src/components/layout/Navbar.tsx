@@ -34,7 +34,7 @@ function MobileMenu() {
 
   return (
     <div
-      className={`fixed inset-0 top-10.25 z-50 bg-white md:top-18 xl:hidden`}
+      className={`fixed inset-0 top-10.25 z-70 bg-white md:top-18 xl:hidden`}
     >
       <nav className="flex h-full flex-col overflow-y-auto pt-2">
         {ALL_KEYS.map((label) => {
@@ -108,10 +108,10 @@ function Navbar() {
     'hover:text-attention-text flex hover:cursor-pointer items-center gap-1 px-3 py-2 text-[0.9rem] shrink-0 h-full ';
 
   return (
-    <div className="relative h-full">
+    <div className="sticky top-0 h-full">
       <nav
         ref={navRef}
-        className="bg-standard-bg text-standard-text sticky top-0 z-60 flex min-w-screen items-center justify-between shadow md:h-18 md:px-7"
+        className="bg-standard-bg text-standard-text z-60 flex min-w-screen items-center justify-between shadow md:h-18 md:px-7"
       >
         {/* Left */}
         <div className="flex h-full items-center gap-0.5">
