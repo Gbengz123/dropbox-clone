@@ -3,19 +3,18 @@ import { twMerge } from 'tailwind-merge';
 
 interface buttonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'danger';
+  variant?: 'primary' | 'secondary';
   className?: string;
 }
 
 const buttonVariants = cva(
-  'shrink-0 cursor-pointer rounded-xl border-none px-4 py-2 text-[1rem] font-semibold',
+  'cursor-pointer rounded-xl px-4 py-2 text-[1rem] font-semibold transition-color duration-150',
   {
     variants: {
       variant: {
-        primary:
-          'bg-accent hover:bg-button-hover-bg transition-color text-white duration-150',
-        secondary: 'bg-gray-200 text-black',
-        danger: 'bg-red-500 text-white',
+        primary: 'bg-accent hover:bg-button-hover-bg text-white border-none',
+        secondary:
+          'bg-transparent text-standard-text hover:bg-secondary-hover border border-standard-text flex gap-6 items-center',
       },
     },
     defaultVariants: {
