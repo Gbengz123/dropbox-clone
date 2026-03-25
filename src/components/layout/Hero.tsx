@@ -1,7 +1,7 @@
 import Button from '../Button';
 import { ArrowRight } from 'lucide-react';
 import heroImage from '../../assets/hero-image.webp';
-import HeroCarousel from '../heroCarousel';
+import HeroCarousel from '../HeroCarousel';
 
 function Hero() {
   return (
