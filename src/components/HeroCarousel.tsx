@@ -48,7 +48,7 @@ const HeroCarousel = () => {
   const extendedImages = Array(3).fill(carouselImages).flat();
 
   return (
-    <div className="flex w-full flex-col items-center gap-5">
+    <div className="z-0 flex w-full flex-col items-center gap-5">
       <div
         className="w-full overflow-hidden"
         ref={emblaRef}
@@ -64,7 +64,7 @@ const HeroCarousel = () => {
       >
         <div className="flex">
           {extendedImages.map((src, index) => (
-            <div key={index} className="mx-15 h-38 min-w-37.5">
+            <div key={index} className="mx-14 h-38 min-w-37.5 shrink-0">
               <img
                 src={src}
                 alt={`carousel item ${index}`}
