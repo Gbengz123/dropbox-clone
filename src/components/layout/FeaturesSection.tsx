@@ -3,6 +3,10 @@ import { ArrowRight } from 'lucide-react';
 import Search from '../../assets/Search.svg';
 import Tiles from '../../assets/Tiles.svg';
 import Share from '../../assets/Share.svg';
+import customerFashion from '../../assets/customer-fashion.webp';
+import mclarenPhoto from '../../assets/mclaren-photo.webp';
+import sharePhoto from '../../assets/share-photo.webp';
+import FeaturesDisplay from '../FeaturesDisplay';
 
 type CTA = {
   label: string;
@@ -23,7 +27,6 @@ type SectionProps = {
 };
 
 function Section({ badge, title, description, ctas }: SectionProps) {
-  if (typeof badge !== 'string') console.log(badge.src);
   return (
     <section className="flex flex-col items-center px-5 py-20 text-center">
       {typeof badge === 'string' ? (
@@ -84,6 +87,11 @@ function FeaturesSection() {
         description="Get to the right file, fact or message when you need it, so you spend less time searching and more time working."
         ctas={[{ label: 'Try Dropbox free', variant: 'secondary' }]}
       />
+      <FeaturesDisplay
+        left="image"
+        imgSrc={customerFashion}
+        videoSrc={'/dropbox-home-find.webm'}
+      />
       <Section
         badge={{
           label: 'Organise',
@@ -95,6 +103,11 @@ function FeaturesSection() {
           { label: 'Learn more', variant: 'secondary' },
           { label: 'Try Dropbox free' },
         ]}
+      />
+      <FeaturesDisplay
+        left="video"
+        imgSrc={mclarenPhoto}
+        videoSrc="/dropbox-home-organize.webm"
       />
       <Section
         badge={{
@@ -108,6 +121,12 @@ function FeaturesSection() {
           { label: 'Try Dropbox free' },
         ]}
       />
+      <FeaturesDisplay
+        left="image"
+        imgSrc={sharePhoto}
+        videoSrc="/dropbox-home-share.webm"
+      />
+      <div className="pb-[100vw]"></div>
     </>
   );
 }
