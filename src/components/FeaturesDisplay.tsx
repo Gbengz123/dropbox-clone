@@ -9,8 +9,6 @@ type FeaturesDisplayProps = {
   videoSrc?: string;
 };
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
 function FeaturesDisplay({ left, imgSrc, videoSrc }: FeaturesDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -24,15 +22,58 @@ function FeaturesDisplay({ left, imgSrc, videoSrc }: FeaturesDisplayProps) {
       const videoWrapper = container?.querySelector('.video-wrapper');
 
       if (!container || !video || !image || !videoWrapper) return;
-      const containerHeight = container.offsetHeight;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'center-=100px bottom',
-          end: 'bottom top',
-          scrub: true,
-          invalidateOnRefresh: true, // recalc on resize
+      const mm = gsap.matchMedia();
+
+      mm.add('(min-width: 1024px)', () => {
+        //DESKTOP ONLY
+
+        const containerHeight = container.offsetHeight;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: container,
+            start: 'center-=100px bottom',
+            end: 'bottom top',
+            scrub: true,
+            invalidateOnRefresh: true,
+
+            onEnter: () => {
+              video.currentTime = 0;
+              video.play();
+            },
+
+            onEnterBack: () => {
+              video.currentTime = 0;
+              video.play();
+            },
+
+            onLeave: () => video.pause(),
+            onLeaveBack: () => video.pause(),
+          },
+        });
+
+        tl.fromTo(
+          videoWrapper,
+          { y: containerHeight / 2 + 60 },
+          { y: -(containerHeight + 350), ease: 'none' },
+          0,
+        );
+
+        tl.fromTo(
+          image,
+          { y: containerHeight / 2 - 100 },
+          { y: -containerHeight + 20, ease: 'none' },
+          0,
+        );
+      });
+
+      mm.add('(max-width: 1023px)', () => {
+        // MOBILE: NO ANIMATION, JUST PLAY/PAUSE BASED ON SCROLL
+        const trigger = ScrollTrigger.create({
+          trigger: video,
+          start: 'top 80%', // when video is near viewport
+          end: 'bottom 20%',
 
           onEnter: () => {
             video.currentTime = 0;
@@ -44,41 +85,14 @@ function FeaturesDisplay({ left, imgSrc, videoSrc }: FeaturesDisplayProps) {
             video.play();
           },
 
-          onLeave: () => {
-            video.pause();
-          },
+          onLeave: () => video.pause(),
+          onLeaveBack: () => video.pause(),
+        });
 
-          onLeaveBack: () => {
-            video.pause();
-          },
-        },
+        return () => trigger.kill();
       });
 
-      // video moves faster
-      tl.fromTo(
-        videoWrapper,
-        {
-          y: containerHeight / 2 + 60, //The 600px is height of container
-        },
-        {
-          y: -(containerHeight + 350), // moves out of view of the container
-          ease: 'none',
-        },
-        0,
-      );
-
-      // image moves slower
-      tl.fromTo(
-        image,
-        {
-          y: containerHeight / 2 - 100, //The 600px is height of container
-        },
-        {
-          y: -containerHeight + 20, // moves out of view of the container
-          ease: 'none',
-        },
-        0,
-      );
+      return () => mm.revert(); // cleanup to remove ScrollTriggers and timelines when the component unmounts or screen resizes
     },
     { scope: containerRef, dependencies: [] },
   );
@@ -86,7 +100,7 @@ function FeaturesDisplay({ left, imgSrc, videoSrc }: FeaturesDisplayProps) {
   return (
     <>
       <section className="flex justify-center">
-        <div className="flex h-150 w-full max-w-360 justify-center">
+        <div className="flex h-fit w-full max-w-360 justify-center lg:h-150">
           <div ref={containerRef} className="flex h-full w-[90%] xl:w-[70%]">
             {left === 'video' ? (
               <>
@@ -103,7 +117,7 @@ function FeaturesDisplay({ left, imgSrc, videoSrc }: FeaturesDisplayProps) {
 
                 <div
                   ref={imageRef}
-                  className="hidden h-[500px] w-[500px] shrink-0 lg:block"
+                  className="hidden h-[500px] w-[500px] shrink-0 lg:flex"
                   style={{
                     marginLeft: 'calc(100% - 1211px)',
                   }}
@@ -115,7 +129,7 @@ function FeaturesDisplay({ left, imgSrc, videoSrc }: FeaturesDisplayProps) {
               <>
                 <div
                   ref={imageRef}
-                  className="hidden h-[500px] w-[500px] shrink-0 lg:block"
+                  className="hidden h-[500px] w-[500px] shrink-0 lg:flex"
                   style={{
                     marginRight: 'calc(100% - 1211px)',
                   }}
