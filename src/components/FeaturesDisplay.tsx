@@ -56,14 +56,14 @@ function FeaturesDisplay({ left, imgSrc, videoSrc }: FeaturesDisplayProps) {
         tl.fromTo(
           videoWrapper,
           { y: containerHeight / 2 + 60 },
-          { y: -(containerHeight + 350), ease: 'none' },
+          { y: -(containerHeight + 400), ease: 'none' },
           0,
         );
 
         tl.fromTo(
           image,
           { y: containerHeight / 2 - 100 },
-          { y: -containerHeight + 20, ease: 'none' },
+          { y: -containerHeight + 180, ease: 'none' },
           0,
         );
       });
@@ -117,7 +117,7 @@ function FeaturesDisplay({ left, imgSrc, videoSrc }: FeaturesDisplayProps) {
 
                 <div
                   ref={imageRef}
-                  className="hidden h-[500px] w-[500px] shrink-0 lg:flex"
+                  className="hidden h-125 w-125 shrink-0 lg:flex"
                   style={{
                     marginLeft: 'calc(100% - 1211px)',
                   }}
@@ -129,7 +129,7 @@ function FeaturesDisplay({ left, imgSrc, videoSrc }: FeaturesDisplayProps) {
               <>
                 <div
                   ref={imageRef}
-                  className="hidden h-[500px] w-[500px] shrink-0 lg:flex"
+                  className="hidden h-125 w-125 shrink-0 lg:flex"
                   style={{
                     marginRight: 'calc(100% - 1211px)',
                   }}
