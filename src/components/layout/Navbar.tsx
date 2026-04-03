@@ -3,7 +3,9 @@ import dropbox from '../../assets/dropbox.svg';
 import { ChevronDown, Globe, Menu, X } from 'lucide-react';
 import Button from '../Button';
 import Dropownpanel from '../Dropownpanel';
-import { productItems, SubMenu } from './MobileNav';
+import ProductsMenu from '../ProductsMenu';
+import SolutionsMenu from '../SolutionsMenu';
+import GetAppMenu from '../GetAppMenu';
 
 // Track button position for alignment
 export interface ButtonRect {
@@ -26,11 +28,11 @@ const isDropdown = (label: string): label is (typeof DROPDOWN_KEYS)[number] => {
 };
 
 function MobileMenu() {
-  const [active, setActive] = useState<ActiveKey | null>(null);
+  const [activeLabel, setActiveLabel] = useState<ActiveKey | null>(null);
   const ALL_KEYS = [...LEFT_NAV_LINKS, ...RIGHT_NAV_LINKS] as const;
 
   const toggle = (key: ActiveKey | null) =>
-    setActive((prev) => (prev === key ? null : key));
+    setActiveLabel((prev) => (prev === key ? null : key));
 
   return (
     <div
@@ -43,7 +45,7 @@ function MobileMenu() {
             <div key={label}>
               <button
                 onClick={() => hasDropdown && toggle(label)}
-                className={`flex w-full items-center gap-1 px-10 py-4 hover:cursor-pointer hover:text-[#0061FF] ${active === label ? 'text-[#0061FF]' : 'text-gray-900'}`}
+                className={`flex w-full items-center gap-1 px-10 py-4 hover:cursor-pointer hover:text-[#0061FF] ${activeLabel === label ? 'text-[#0061FF]' : 'text-gray-900'}`}
               >
                 <span
                   className={`text-[1.05rem] font-semibold transition-colors duration-200`}
@@ -55,12 +57,18 @@ function MobileMenu() {
                     <ChevronDown
                       width={14}
                       height={14}
-                      className={`transition-transform duration-300 ${active === label ? 'rotate-180' : 'rotate-0'}`}
+                      className={`transition-transform duration-300 ${activeLabel === label ? 'rotate-180' : 'rotate-0'}`}
                     />
                   </span>
                 )}
               </button>
-              <SubMenu items={productItems} open={active === label} />
+              {activeLabel === label && (
+                <div className="bg-faint-bg overflow-hidden p-8">
+                  {activeLabel === 'Products' && <ProductsMenu />}
+                  {activeLabel === 'Solutions' && <SolutionsMenu />}
+                  {activeLabel === 'Get app' && <GetAppMenu />}
+                </div>
+              )}
             </div>
           );
         })}
