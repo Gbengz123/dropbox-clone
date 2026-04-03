@@ -1,36 +1,7 @@
 import type { ButtonRect } from './layout/Navbar';
-
-interface MenuItem {
-  label: string;
-  desc: string;
-}
-
-interface MenuData {
-  [key: string]: MenuItem[];
-}
-
-const menuData: MenuData = {
-  Products: [
-    { label: 'Dropbox Plus', desc: 'More space for personal use' },
-    { label: 'Dropbox Business', desc: 'For teams and companies' },
-    { label: 'Dropbox Sign', desc: 'eSignatures made easy' },
-    { label: 'Dropbox Paper', desc: 'Collaborative workspace' },
-    { label: 'Dropbox Dash', desc: 'AI-powered search' },
-  ],
-  Solutions: [
-    { label: 'Remote work', desc: 'Work from anywhere' },
-    { label: 'Cloud storage', desc: 'Secure file storage' },
-    { label: 'Document management', desc: 'Organize your files' },
-    { label: 'Video collaboration', desc: 'Review and approve' },
-    { label: 'Workflow automation', desc: 'Automate repetitive tasks' },
-  ],
-  'Get app': [
-    { label: 'Desktop app', desc: 'macOS & Windows' },
-    { label: 'Mobile app', desc: 'iOS & Android' },
-    { label: 'Browser extension', desc: 'Chrome, Firefox & Edge' },
-  ],
-};
-
+import ProductsMenu from './ProductsMenu';
+import SolutionsMenu from './SolutionsMenu';
+import GetAppMenu from './GetAppMenu';
 interface DropdownPanelProps {
   label: string;
   timeoutRef: React.RefObject<NodeJS.Timeout | null>;
@@ -46,7 +17,6 @@ function Dropdownpanel({
   anchorRect,
   setOpenMenu,
 }: DropdownPanelProps) {
-  console.log(menuData[label]);
   return (
     <>
       {/* Backdrop */}
@@ -56,13 +26,13 @@ function Dropdownpanel({
 
       {/* Full-width panel */}
       <div
-        className={`absolute right-0 left-0 z-50 w-screen bg-white shadow-lg transition-all duration-500 ease-out ${isOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-8 opacity-0'} `}
+        className={`absolute right-0 left-0 z-50 w-screen border-t border-gray-200 bg-white shadow-lg transition-all duration-500 ease-out ${isOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-8 opacity-0'} `}
         style={{ top: 'calc(100% - 1px)' }}
       >
         {/* Inner content — offset to align under the anchor button */}
         <div className="px-2" style={{ paddingLeft: anchorRect?.left ?? 0 }}>
           <div
-            className="flex w-56 flex-col py-4"
+            className="py-3"
             onMouseEnter={(e) => {
               e.stopPropagation();
               clearTimeout(timeoutRef.current!);
@@ -72,17 +42,9 @@ function Dropdownpanel({
               setOpenMenu(null);
             }}
           >
-            {menuData[label].map((item) => (
-              <div
-                key={item.label}
-                className="cursor-pointer rounded-lg px-3.5 py-2.5 transition-colors duration-100 hover:bg-gray-50"
-              >
-                <p className="text-sm font-semibold text-gray-900">
-                  {item.label}
-                </p>
-                <p className="mt-0.5 text-xs text-gray-500">{item.desc}</p>
-              </div>
-            ))}
+            {label === 'Products' && <ProductsMenu />}
+            {label === 'Solutions' && <SolutionsMenu />}
+            {label === 'Get app' && <GetAppMenu />}
           </div>
         </div>
       </div>
