@@ -10,10 +10,11 @@ import FeaturesDisplay from '../FeaturesDisplay';
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import clsx from 'clsx';
 
 type CTA = {
   label: string;
-  variant?: 'secondary';
+  variant?: 'primary' | 'secondary' | 'security';
 };
 
 type BadgeContent = {
@@ -27,15 +28,28 @@ type SectionProps = {
   title: string;
   description: string;
   ctas: CTA[];
+  animate?: boolean;
+  textColor?: string;
+  faintTextColor?: string;
+  className?: string;
 };
 
-function Section({ badge, title, description, ctas }: SectionProps) {
+export function Section({
+  badge,
+  title,
+  description,
+  ctas,
+  animate = true,
+  textColor = 'text-standard-text',
+  faintTextColor = 'text-faint-text',
+  className,
+}: SectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
       const section = sectionRef.current;
-      if (!section) return;
+      if (!section || animate === false) return;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -63,13 +77,18 @@ function Section({ badge, title, description, ctas }: SectionProps) {
   return (
     <section
       ref={sectionRef}
-      className="flex flex-col items-center px-5 pb-10 text-center"
+      className={clsx(
+        `${textColor} flex flex-col items-center px-5 pb-10 text-center`,
+        className,
+      )}
     >
       <div className="badge">
         {typeof badge === 'string' ? (
-          <img src={badge} alt={``} />
+          <img src={badge} alt={``} height={'50px'} width={'50px'} />
         ) : (
-          <div className="bg-faint-bg text-faint-text mb-4 flex justify-center gap-0.5 rounded-full py-1 pr-4.25 pl-3">
+          <div
+            className={`bg-faint-bg ${faintTextColor} mb-4 flex justify-center gap-0.5 rounded-full py-1 pr-4.25 pl-3`}
+          >
             <img src={badge.src} alt={`${badge.label} image`} />
             <span>{badge.label}</span>
           </div>
@@ -78,17 +97,19 @@ function Section({ badge, title, description, ctas }: SectionProps) {
 
       <h2 className="heading text-3xl font-semibold tracking-tight">{title}</h2>
 
-      <p className="description text-faint-text mt-4 max-w-2xl">
+      <p className={`description ${faintTextColor} mt-4 max-w-2xl`}>
         {description}
       </p>
 
-      <div className="links mt-8 flex flex-col gap-4 lg:flex-row">
+      <div
+        className={`links mt-8 flex flex-col gap-4 ${typeof badge === 'string' ? 'md:flex-row' : 'lg:flex-row'}`}
+      >
         {ctas.map((cta, i) =>
           cta.variant ? (
             <Button
               key={i}
               variant={cta.variant}
-              className="group rounded-2xl border-2 px-6 py-3.5"
+              className={`${textColor} border-${textColor} group rounded-2xl border-2 px-6 py-3.5`}
             >
               {cta.label}
               <ArrowRight
@@ -100,7 +121,7 @@ function Section({ badge, title, description, ctas }: SectionProps) {
             <a
               key={i}
               href=""
-              className="group flex items-center gap-1 p-4 font-semibold underline underline-offset-3"
+              className="group flex items-center justify-center gap-1 p-4 font-semibold underline underline-offset-3"
             >
               {cta.label}
               <ArrowRight
