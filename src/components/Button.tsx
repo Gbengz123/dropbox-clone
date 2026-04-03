@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge';
 
 interface buttonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'security';
   className?: string;
 }
 
@@ -15,6 +15,8 @@ const buttonVariants = cva(
         primary: 'bg-accent hover:bg-button-hover-bg text-white border-none',
         secondary:
           'bg-transparent text-standard-text hover:bg-secondary-hover border border-standard-text flex gap-6 items-center',
+        security:
+          'bg-transparent text-standard-text hover:bg-inverse-faint-text/20 border border-standard-text flex gap-6 items-center',
       },
     },
     defaultVariants: {
