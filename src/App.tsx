@@ -6,6 +6,10 @@ import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect } from 'react';
+import FeaturesSecuritySection from './components/layout/FeaturesSecuritySection';
+import IndustriesSection from './components/layout/IndustriesSection';
+import ResourcesSection from './components/layout/ResourcesSection';
+import Footer from './components/layout/Footer';
 
 function App() {
   gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -40,6 +44,10 @@ function App() {
       <Navbar />
       <Hero />
       <FeaturesSection />
+      <FeaturesSecuritySection />
+      <IndustriesSection />
+      <ResourcesSection />
+      <Footer />
     </>
   );
 }
