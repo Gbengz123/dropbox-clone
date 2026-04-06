@@ -6,7 +6,7 @@ import { motion } from 'motion/react';
 import { containerVariant, itemVariant } from '../utils/dropMenuAnimations';
 interface DropdownPanelProps {
   label: string;
-  timeoutRef: React.RefObject<NodeJS.Timeout | null>;
+  timeoutRef: React.RefObject<ReturnType<typeof setTimeout> | null>;
   isOpen: boolean;
   anchorRect: ButtonRect | null;
   setOpenMenu: (label: string | null) => void;
