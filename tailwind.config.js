@@ -20,6 +20,9 @@ export default {
       screens: {
         xs: '480px',
       },
+      fontFamily: {
+        grotesk: ['grotesk', 'sans-serif'],
+      },
     },
   },
   plugins: [],

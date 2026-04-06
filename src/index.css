@@ -3,6 +3,6 @@
 
 @font-face {
   font-family: grotesk;
-  src: url('fonts/SchibstedGrotesk-VariableFont_wght.ttf');
+  src: url('fonts/SchibstedGrotesk-VariableFont_wght.ttf') format('truetype');
   font-style: normal;
 }
