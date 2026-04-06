@@ -4,7 +4,7 @@ import securityLeft1 from '../../assets/security-left-1.webp';
 import securityLeft2 from '../../assets/security-left-2.webp';
 import securityLeft3 from '../../assets/security-left-3.webp';
 import productSecurity from '../../assets/product-security.webp';
-import securityThumb from '../../assets/securityThumb.webp';
+import securityThumb from '../../assets/SecurityThumb.webp';
 import brianThumb from '../../assets/BrianThumb.webp';
 import justinThumb from '../../assets/JustinThumb.webp';
 import play from '../../assets/Play.svg';
