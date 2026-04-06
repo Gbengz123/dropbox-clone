@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react';
-import Construction from '../../assets/construction.webp';
+import Construction from '../../assets/Construction.webp';
 import Media from '../../assets/Media.webp';
 import Tech from '../../assets/Tech.webp';
 import professionalServices from '../../assets/ProfessionalServices.webp';
