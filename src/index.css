@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
+
+@font-face {
+  font-family: grotesk;
+  src: url('fonts/SchibstedGrotesk-VariableFont_wght.ttf');
+  font-style: normal;
+}
