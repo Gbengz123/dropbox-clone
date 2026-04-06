@@ -5,6 +5,7 @@ import Tech from '../../assets/Tech.webp';
 import professionalServices from '../../assets/ProfessionalServices.webp';
 import Manufacturing from '../../assets/Manufacturing.webp';
 import Education from '../../assets/Education.webp';
+import { motion, type Variants } from 'motion/react';
 
 type Industry = {
   title: string;
@@ -51,6 +52,28 @@ const industries: Industry[] = [
   },
 ];
 
+const containerVariant: Variants = {
+  outOfView: {},
+  inView: {
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+const itemVariant: Variants = {
+  outOfView: { opacity: 0, scale: 0.9, filter: 'blur(10px)' },
+  inView: {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.5,
+      ease: 'easeOut',
+    },
+  },
+};
+
 function IndustriesSection() {
   return (
     <section className="py-10">
@@ -62,11 +85,18 @@ function IndustriesSection() {
         </h2>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <motion.div
+          className="grid auto-rows-fr grid-cols-1 gap-4 lg:grid-cols-2"
+          variants={containerVariant}
+          initial="outOfView"
+          whileInView="inView"
+          viewport={{ once: true, amount: 0.25 }}
+        >
           {industries.map((item, i) => (
-            <div
+            <motion.div
               key={i}
               className="bg-faint-bg group grid grid-cols-1 overflow-hidden rounded-2xl hover:cursor-pointer md:grid-cols-[190px_1fr]"
+              variants={itemVariant}
             >
               {/* LEFT: Background image */}
               <div
@@ -91,9 +121,9 @@ function IndustriesSection() {
                   />
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

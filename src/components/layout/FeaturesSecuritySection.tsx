@@ -76,8 +76,30 @@ const securityLeft3Variant: Variants = {
 };
 
 const productSecurityVariant: Variants = {
-  outOfview: { y: 100 },
-  inView: { y: -80, transition: inViewImageTransition },
+  outOfView: { y: 300 },
+  inView: { y: -50, transition: inViewImageTransition },
+};
+
+const testimonialContainerVariant: Variants = {
+  outOfView: {},
+  inView: {
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+const testimonialVariant: Variants = {
+  outOfView: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+  inView: {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.7,
+      ease: 'easeOut',
+    },
+  },
 };
 
 function FeaturesSecuritySection() {
@@ -131,11 +153,11 @@ function FeaturesSecuritySection() {
         <div className="py-10 md:py-20">
           <motion.div
             ref={imageContainerRef}
-            className="flex h-fit w-full items-end justify-center lg:mx-[calc((100%-995px)/2)] lg:justify-start lg:pl-8"
+            className="flex h-fit w-full items-end justify-center lg:justify-center lg:pl-[240px]"
             variants={imageContainerVariant}
             initial="outOfView"
             whileInView="inView"
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: true, amount: 0.2 }}
           >
             <motion.div
               className="relative hidden h-fit w-fit shrink-0 flex-col lg:flex"
@@ -159,19 +181,19 @@ function FeaturesSecuritySection() {
               />
             </motion.div>
             <motion.div
-              className="relative z-10 hidden h-[473.4px] w-[374px] shrink-0 grow-0 lg:block"
+              className="relative z-10 hidden h-[473.4px] w-[374px] shrink-0 grow-0 lg:block lg:-translate-x-15"
               style={{ y: leftY }}
             >
               <motion.img
                 src={securityLeft3}
                 alt=""
-                className="absolute bottom-3 -left-15 h-full w-full origin-left"
+                className="absolute bottom-3 h-full w-full origin-left"
                 variants={securityLeft3Variant}
               />
             </motion.div>
             <motion.div
-              className="relative z-20 grow-0 px-8 md:h-[480px] md:w-[595px] md:shrink-0 md:px-0 lg:-translate-x-[240px]"
-              style={{ y: rightY }}
+              className="z-20 grow-0 px-8 md:h-[480px] md:w-[595px] md:shrink-0 md:px-0 lg:-translate-x-[240px]"
+              style={{ y: isMobile ? 0 : rightY }}
             >
               <motion.img
                 src={productSecurity}
@@ -182,11 +204,18 @@ function FeaturesSecuritySection() {
             </motion.div>
           </motion.div>
         </div>
-        <div className="mx-auto flex gap-5 overflow-scroll px-20 pt-10 pb-30">
+        <motion.div
+          className="mx-auto flex gap-5 overflow-scroll px-20 pt-10 pb-30"
+          variants={testimonialContainerVariant}
+          initial="outOfView"
+          whileInView="inView"
+          viewport={{ once: true, margin: '-100px' }}
+        >
           {testimonials.map((testimonial, i) => (
-            <div
+            <motion.div
               key={i}
               className="text-inverse-standard-text flex h-[615px] w-[300px] shrink-0 flex-col items-center gap-8 overflow-hidden rounded-2xl bg-gradient-to-br from-[#1c1f26] to-[#111318] shadow-2xl hover:cursor-pointer md:h-auto md:w-[720px] md:flex-row md:items-stretch"
+              variants={testimonialVariant}
             >
               <div className="relative h-[280px] w-[280px] shrink-0 p-2">
                 <img
@@ -214,9 +243,9 @@ function FeaturesSecuritySection() {
                   Watch testimonial
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

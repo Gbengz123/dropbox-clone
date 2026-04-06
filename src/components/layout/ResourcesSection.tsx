@@ -1,3 +1,4 @@
+import { motion, type Variants } from 'motion/react';
 import distraction from '../../assets/Asset-Distraction.webp';
 import McLaren from '../../assets/Asset-McLaren.webp';
 import sharing from '../../assets/Asset-Sharing.webp';
@@ -35,6 +36,28 @@ const articles: Article[] = [
   },
 ];
 
+const containerVariant: Variants = {
+  outOfView: {},
+  inView: {
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+const itemVariant: Variants = {
+  outOfView: { opacity: 0, scale: 0.9, filter: 'blur(10px)' },
+  inView: {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.5,
+      ease: 'easeOut',
+    },
+  },
+};
+
 function ResourcesSection() {
   return (
     <section className="bg-faint-bg text-standard-text py-10">
@@ -46,11 +69,18 @@ function ResourcesSection() {
         </h2>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-[repeat(auto-fit,minmax(315px,1fr))]">
+        <motion.div
+          className="grid grid-cols-1 gap-6 md:grid-cols-[repeat(auto-fit,minmax(315px,1fr))]"
+          variants={containerVariant}
+          initial="outOfView"
+          whileInView="inView"
+          viewport={{ once: true, amount: 0.25 }}
+        >
           {articles.map((article, i) => (
-            <div
+            <motion.div
               key={i}
               className="bg-standard-bg flex flex-col overflow-hidden rounded-2xl hover:cursor-pointer"
+              variants={itemVariant}
             >
               {/* Image (background) */}
               <div
@@ -74,9 +104,9 @@ function ResourcesSection() {
                   Read article
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Footer link */}
         <div className="mt-10 text-center">

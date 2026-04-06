@@ -6,6 +6,8 @@ import Dropownpanel from '../Dropownpanel';
 import ProductsMenu from '../ProductsMenu';
 import SolutionsMenu from '../SolutionsMenu';
 import GetAppMenu from '../GetAppMenu';
+import { AnimatePresence } from 'motion/react';
+import { containerVariant, itemVariant } from '../../utils/dropMenuAnimations';
 
 // Track button position for alignment
 export interface ButtonRect {
@@ -64,9 +66,24 @@ function MobileMenu() {
               </button>
               {activeLabel === label && (
                 <div className="bg-faint-bg overflow-hidden p-8">
-                  {activeLabel === 'Products' && <ProductsMenu />}
-                  {activeLabel === 'Solutions' && <SolutionsMenu />}
-                  {activeLabel === 'Get app' && <GetAppMenu />}
+                  {activeLabel === 'Products' && (
+                    <ProductsMenu
+                      containerVariant={containerVariant}
+                      itemVariant={itemVariant}
+                    />
+                  )}
+                  {activeLabel === 'Solutions' && (
+                    <SolutionsMenu
+                      containerVariant={containerVariant}
+                      itemVariant={itemVariant}
+                    />
+                  )}
+                  {activeLabel === 'Get app' && (
+                    <GetAppMenu
+                      containerVariant={containerVariant}
+                      itemVariant={itemVariant}
+                    />
+                  )}
                 </div>
               )}
             </div>
@@ -97,7 +114,10 @@ function Navbar() {
     e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>,
   ) => {
     if (!isDropdown(label)) return;
-    clearTimeout(timeoutRef.current!);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current!);
+      timeoutRef.current = null;
+    }
     const btnRect = e.currentTarget.getBoundingClientRect();
     const navRect = navRef.current?.getBoundingClientRect();
     setAnchorRect({
@@ -223,15 +243,17 @@ function Navbar() {
         </div>
       </nav>
 
-      {openMenu && isDropdown(openMenu) && (
-        <Dropownpanel
-          label={openMenu}
-          timeoutRef={timeoutRef}
-          isOpen={true}
-          anchorRect={anchorRect}
-          setOpenMenu={setOpenMenu}
-        />
-      )}
+      <AnimatePresence mode="wait">
+        {openMenu && isDropdown(openMenu) && (
+          <Dropownpanel
+            label={openMenu}
+            timeoutRef={timeoutRef}
+            isOpen={true}
+            anchorRect={anchorRect}
+            setOpenMenu={setOpenMenu}
+          />
+        )}
+      </AnimatePresence>
 
       {mobileMenuOpen && <MobileMenu />}
     </div>
