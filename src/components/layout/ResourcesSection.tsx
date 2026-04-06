@@ -74,7 +74,7 @@ function ResourcesSection() {
           variants={containerVariant}
           initial="outOfView"
           whileInView="inView"
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: true, amount: 0.2 }}
         >
           {articles.map((article, i) => (
             <motion.div
